@@ -1,6 +1,29 @@
-prerequisite
+prerequisite ubuntu  16.04
 
 sudo apt install build-essential libqt4-dev qt5-qmake cmake qttools5-dev libqt5webkit5-dev qttools5-dev-tools qt5-default python-sphinx texlive-latex-base inotify-tools openssl libssl-dev libdb++-dev libminiupnpc-dev git sqlite3 libsqlite3-dev g++ libpng-dev git g++ gedit python gcc make libbz2-dev libdb-dev libssl-dev openssl libreadline-dev autoconf libtool git libleveldb-dev libblkid-dev e2fslibs-dev libboost-all-dev libaudit-dev automake nano qtbase5-dev qt4-dev-tools
+----------------------
+INSTALL LIBBOOST
+------------------
+
+http://security.ubuntu.com/ubuntu/pool/main/b/boost-defaults/libboost-dev_1.58.0.1ubuntu1_amd64.deb
+
+https://sourceforge.net/projects/boost/files/boost/1.62.0/
+
+
+sudo apt install libboost-1.58-dev-all
+sudo apt install libboost-all-dev
+
+    download and extract with tar -xf boost_1_62_0.tar.gz
+    cd boost_1_62_0
+
+    get required libraries:
+
+    sudo apt-get update && sudo apt-get install build-essential g++ python-dev autotools-dev libicu-dev build-essential libbz2-dev libboost-all-dev
+
+    build with ./bootstrap.sh --prefix=/usr/local
+    install with sudo ./b2 install
+
+Please note you can also get the version currently on your version of Ubuntu can be gotten here
 
 
 
