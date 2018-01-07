@@ -1,0 +1,103 @@
+prerequisite
+
+sudo apt install build-essential libqt4-dev qt5-qmake cmake qttools5-dev libqt5webkit5-dev qttools5-dev-tools qt5-default python-sphinx texlive-latex-base inotify-tools openssl libssl-dev libdb++-dev libminiupnpc-dev git sqlite3 libsqlite3-dev g++ libpng-dev git g++ gedit python gcc make libbz2-dev libdb-dev libssl-dev openssl libreadline-dev autoconf libtool git libleveldb-dev libblkid-dev e2fslibs-dev libboost-all-dev libaudit-dev automake nano qtbase5-dev qt4-dev-tools
+
+
+
+sudo make -j
+
+--------------------------------------
+esempio 1
+
+
+Edit src/CMakeLists.txt
+
+You should find the line:
+
+target_link_libraries(ConnectivityTool CryptoNoteCore Common Logging Crypto P2P Rpc Http Serialization System ${Boost_LIBRARIES})
+
+and replace it with:
+
+set(ConnectivityToolLibs CryptoNoteCore Common Logging Crypto P2P Rpc Http Serialization System ${Boost_LIBRARIES})
+target_link_libraries(ConnectivityTool ${ConnectivityToolLibs} ${ConnectivityToolLibs})
+
+esempio 2
+
+Re: More Compiling errors
+
+Postby *tech_star* » Fri Nov 20, 2015 1:45 pm
+You can try this - in tests/CMakeLists.txt file
+you have to find these lines:
+
+target_link_libraries(IntegrationTests IntegrationTestLibrary Wallet NodeRpcProxy InProcessNode P2P Rpc Http Transfers Serialization System CryptoNoteCore Logging Common Crypto BlockchainExplorer gtest upnpc-static ${Boost_LIBRARIES})
+
+and replace those with:
+
+set(IntegrationTestsLibs IntegrationTestLibrary Wallet NodeRpcProxy InProcessNode P2P Rpc Http Transfers Serialization System CryptoNoteCore Logging Common Crypto BlockchainExplorer gtest upnpc-static ${Boost_LIBRARIES})
+target_link_libraries(IntegrationTests ${IntegrationTestsLibs} ${IntegrationTestsLibs})
+
+
+
+
+
+========================================================================
+Code: Select all
+    sudo make -j4
+
+
+
+I have also found that first using the -j option without specifying the number of threads first then after a reboot run make again with the -j option and specify the number of threads will successfully build the project.
+
+I have a ways to go with my project if anyone has suggestions or perhaps is willing to contribute some code you can check out the project here: https://github.com/ikeman32/VetCoin
+
+I've also started a wiki here: https://github.com/ikeman32/VetCoin/wiki
+
+Bear in mind that this a work in progress and that I am a total novice at this.
+
+
+Here are the links to my threads with my problems that have been solved:
+https://forum.cryptonote.org/viewtopic.php?f=5&t=807
+https://forum.cryptonote.org/viewtopic.php?f=5&t=808
+
+========================================================================================
+
+
+Vitogramer58, please describe in details what actions you did after daemon start.
+By the way, here the list of thins you had to do:
+
+    Run your daemon with --print-genesis-tx argument. It will print out the genesis block coinbase transaction hash. Example:
+
+    Code: Select all
+        furiouscoind --print-genesis-tx
+
+    Copy the tx hash that has been printed out by the deamon to GENESIS_COINBASE_TX_HEX in src/cryptonote_config.h . Example:
+
+    Code: Select all
+        const char GENESIS_COINBASE_TX_HEX[] = "013c01ff0001ffff...785a33d9ebdba68b0";
+
+    Recompile the binaries. Recompile everything again. Your coin code is ready now.
+    
+    ==============================================================
+    
+    
+How to recompile
+
+Postby tingyeeh » Fri Mar 11, 2016 5:25 am
+Hi,
+Can I know how to recompile,
+after I --print-genesis-tx, get the tx hash,
+Should I insert tx hash to src/CryptoNoteConfig.h in Ubuntu, then recompile.
+or insert in Github src/CryptoNoteConfig.h, then download and recomplile
+
+tingyeeh
+     
+    Posts: 6
+    Joined: Fri Mar 11, 2016 5:14 am
+
+Top
+Re: How to recompile
+
+Postby Clever Crypto » Fri Mar 11, 2016 1:42 pm
+You have to add tx hash to src/CryptoNoteConfig.h in Ubuntu and then recompile.
+
+    
